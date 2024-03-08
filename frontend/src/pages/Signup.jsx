@@ -7,6 +7,8 @@ import { SubHeading } from "../components/SubHeading"
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 import { BACKEND_URL } from "../config"
+import { useRecoilState } from "recoil"
+import { navState } from "../atom"
 
 export function  Signup(){
 
@@ -16,6 +18,7 @@ const [username, setUsername] = useState("")
 const [password, setPassword] = useState("")
 const [popup, setPopup] = useState("")
 const [isOpen, setIsopen] = useState(false)
+const [logged, setLogged] = useRecoilState(navState)
 
 const navigate = useNavigate()
 
@@ -57,6 +60,7 @@ return <div className="bg-slate-300 h-screen flex justify-center">
             setPassword("")
             setUsername("")
             setPopup('')
+            setLogged(true)
             navigate('/dashboard')
           }, 3000);
           localStorage.setItem("TOKEN", res.data.token)

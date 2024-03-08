@@ -5,10 +5,12 @@ import { Dashboard } from './pages/Dashboard'
 import { SendMoney } from './pages/SendMony'
 import axios from 'axios'
 import { useEffect, useState } from 'react'  
+import { useRecoilState } from 'recoil'
+import { navState } from './state/nav'
 
  
 function App() {
-  const [logged, setLogged] = useState(true) 
+  const [logged, setLogged] = useRecoilState(navState) 
   useEffect(()=>{
     // check loggedin logic 
     const loggedIn = async ()=>{
@@ -28,7 +30,7 @@ function App() {
     }
   }
   loggedIn()
-},[logged])
+},[logged,])
 
 console.log(localStorage.getItem('TOKEN'));
 return (
@@ -38,7 +40,7 @@ return (
                <Route path='/signup' element={<Signup/>}></Route>
                <Route path='/send' element={ <SendMoney/>}> 
               </Route>
-              <Route path='/signin' element={!logged? <Signin/>: <Navigate to='/dashboard'/>}> 
+              <Route path='/signin' element={<Signin/>}> 
               </Route>
               <Route path='/dashboard' element={logged? <Dashboard/>: <Navigate to='/signin'/>}> 
               </Route>

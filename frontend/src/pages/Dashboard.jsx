@@ -23,7 +23,7 @@ export function  Dashboard(){
      fetchData()
    },[money])
 
-return <div className="bg-white h-screen text-black">
+return <div className="bg-white text-black">
     <AppBar label={'PayTM App'} user={localStorage.getItem('TOKEN')?localStorage.getItem('firstname'):'Default'}></AppBar>
     <div className="flex flex-col m-5 ">
     <Balance label={"Your balance"} balance={money} ></Balance>

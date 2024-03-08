@@ -6,12 +6,15 @@ import { InputBox } from "../components/InputBox"
 import { SubHeading } from "../components/SubHeading"
 import axios from 'axios'
 import {useNavigate } from "react-router-dom"
+import { useRecoilState } from "recoil"
+import { navState } from "../state/nav"
 export function  Signin(){
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [popup, setPopup] = useState("")
   const [isOpen, setIsopen] = useState(false) 
   const navigate = useNavigate()
+  const [logged, setLogged] = useRecoilState(navState)
   
   return <div className="bg-gray-500 h-screen flex justify-center">
   <div className="flex flex-col justify-center">
@@ -45,6 +48,7 @@ export function  Signin(){
               setPassword("")
               setUsername("")
               setPopup('')
+              setLogged(true)
               navigate('/dashboard')
             }, 3000);
             setIsopen(true)

@@ -35,7 +35,7 @@ route.post('/signUp',async (req,res) =>{
     console.log(userId);
     Acount.create({
       userId, 
-      balance: 1*Math.random() * 10000
+      balance: (1*Math.random() * 10000).toFixed(2)
     })
     // will save token in databse
     res.json({message:"User created sucessfully!", token:token}) 

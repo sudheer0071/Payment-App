@@ -58,6 +58,7 @@ export function  Signin(){
               setPassword("")
               setUsername("")
               setPopup('')
+              setLoader('')
               setLogged(true)
               navigate('/dashboard')
             }, 3000);
@@ -70,8 +71,9 @@ export function  Signin(){
           else{
             setTimeout(() => { 
               setIsopen(false)  
+              setLoader('')
               setPopup('')
-            }, 1000);
+            }, 2000);
             setIsopen(true)
           setPopup(json)
           }

@@ -17,7 +17,7 @@ route.get('/me',authMiddleware, async (req,res)=>{
      res.json({message:"User is logged in",firstname:user.firstname})
    }
 })
-
+ 
 route.post('/signUp',async (req,res) =>{ 
     const createpayload = req.body;
     const zodVerify = signupSchema.safeParse(createpayload)  

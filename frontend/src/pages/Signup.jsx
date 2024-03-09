@@ -62,6 +62,7 @@ return <div className="bg-slate-300 h-screen flex justify-center">
             setLastname("")
             setPassword("")
             setUsername("")
+            setLoader('')
             setPopup('')
             setLogged(true)
             navigate('/dashboard')
@@ -73,10 +74,10 @@ return <div className="bg-slate-300 h-screen flex justify-center">
           console.log(res.data.token);
         }
         else{
-         setLoader('')
           setTimeout(() => { 
             setIsopen(false) 
             setUsername('')
+            setLoader('')
             setPopup('') 
           }, 3000); 
           setIsopen(true)

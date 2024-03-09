@@ -4,6 +4,9 @@ import axios  from "axios"
 import { useState } from "react"
 import logo from "../assets/tick-green-icon.svg";
 import { BACKEND_URL } from "../config";
+import { useRecoilState, useResetRecoilState } from "recoil";
+import { navState } from "../atom";
+import { Loader } from "../components/Loader";
 
 export const SendMoney = () => {
 const [searchParams] = useSearchParams()
@@ -13,7 +16,9 @@ const [amount,setAmount] = useState('')
 const [popup, setPopup] = useState("")
 const [isOpen, setIsopen] = useState(false)
 const token = localStorage.getItem("TOKEN")
- 
+const [logged, setLogged] = useRecoilState(navState)
+const [loader,setLoader] = useState(false)
+
 const navigate = useNavigate()
 
   return <div class="flex justify-center h-screen bg-gray-300 text-black">
@@ -64,7 +69,9 @@ const navigate = useNavigate()
                         setPopup("Please Enter Amount! ")
                     }
 
-                  else{  const res = await axios.post(`${BACKEND_URL}/api/v1/account/transfer`,{
+                  else{   
+                    setLoader(true)
+                    const res = await axios.post(`${BACKEND_URL}/api/v1/account/transfer`,{
                         amount: amount ,to:id
                   },{
                     headers:{
@@ -75,10 +82,13 @@ const navigate = useNavigate()
                     
                     const json = res.data.message 
                     if (json.includes('successful')) {
+                        setLoader(true)
                         setTimeout(() => {
                             setPopup('')
                             setIsopen(false)
                             setAmount('')
+                            setLoader(false)
+                            setLogged(true)
                             navigate('/dashboard')
                         }, 2000);
                         setIsopen(true)
@@ -87,18 +97,20 @@ const navigate = useNavigate()
                     else{
                         setTimeout(() => {
                           setPopup('')
+                          setAmount('')
+                          setLoader(false)
                           setIsopen(false)
                         }, 1000);
-                        setIsopen(true)
+                        setIsopen(true) 
                          setPopup(json)
                     }
                     }
                   }} class="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-green-500 text-white">
-                      Initiate Transfer
+                      {loader?<Loader/>:'Initiate Transfer'}
                   </button>
               </div>
               </div>
-      </div>
+      </div> 
     </div>
   </div>
 }

@@ -24,8 +24,7 @@ function MainApp() {
 
   useEffect(()=>{
      const timeout = setTimeout(() => {
-      setIsloading(false);
-      // navigate('/signin')
+      setIsloading(false); 
      }, 3000);
      return ()=>clearInterval(timeout)
   },[isloading])

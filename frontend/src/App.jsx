@@ -60,7 +60,7 @@ function MainApp() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={isloading?<Loader/>:<Navigate to='/signin' />}></Route>
-          <Route path='/signup' element={<Signup />}></Route>
+          <Route path='/signup' element={<Signup />}></Route> 
           <Route path='/send' element={<SendMoney />}>
           </Route>
           <Route path='/signin' element={!logged ? <Signin /> : <Dashboard />}>

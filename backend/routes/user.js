@@ -28,7 +28,7 @@ route.post('/signUp',async (req,res) =>{
     if(alaready){
       return res.json({message:"Username already exist try different one"})
     }
-  
+   
     const user = await User.create(createpayload) 
     const token = jwt.sign({userId:user._id}, secret)
     const userId = user._id

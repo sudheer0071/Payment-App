@@ -6,7 +6,7 @@ import { InputBox } from "../components/InputBox"
 import { SubHeading } from "../components/SubHeading"
 import axios from 'axios'
 import {useNavigate } from "react-router-dom"
-import { navState } from "../atom"
+import { load, navState } from "../atom"
 import { useRecoilState } from "recoil"
 import { BACKEND_URL } from "../config"
 export function  Signin(){
@@ -15,6 +15,9 @@ export function  Signin(){
   const [popup, setPopup] = useState("")
   const [isOpen, setIsopen] = useState(false) 
   const [logged, setLogged] = useRecoilState(navState)
+  const [loader, setLoader] = useRecoilState(load)
+  const [emptyEmail, setEmtpyemail] = useState(false)
+  const [emptyPass, setEmtpypass] = useState(false)
 
   const navigate = useNavigate()
   
@@ -26,8 +29,8 @@ export function  Signin(){
    <Heading text={"Sign in"}></Heading>
    <SubHeading text={"Enter your information to access an account"}></SubHeading>
  
-   <InputBox placeholder={"Enter Email"} value={username} onChange={(e)=>{setUsername(e.target.value)}}  label={"Email"}></InputBox>
-   <InputBox password={true} placeholder={"Enter Password"} value={password} onChange={(e)=>{setPassword(e.target.value)}}  label={"Password"}></InputBox>
+   <InputBox empty={emptyEmail} placeholder={"Enter Email"} value={username} onChange={(e)=>{setUsername(e.target.value)}}  label={"Email"}></InputBox>
+   <InputBox empty={emptyPass} password={true} placeholder={"Enter Password"} value={password} onChange={(e)=>{setPassword(e.target.value)}}  label={"Password"}></InputBox>
    <Button  onclick={async ()=>{
      
      if (password==''||username=='') {  
@@ -36,9 +39,13 @@ export function  Signin(){
          setIsopen(false)
         }, 3000);
         setIsopen(true)
+        //********************************** will set shake inputs **********************************
+        // setEmtpyemail(true)
         setPopup("Please enter all feilds")
       }
       else{
+        setLoader('signin')
+        console.log(loader);
         const res = await axios.post(`${BACKEND_URL}/api/v1/user/signIn`,
       {
           username, password
@@ -70,7 +77,7 @@ export function  Signin(){
           }
         }
      
-   }}label={"Sign in"}></Button>
+   }}label={"Sign in"} loader={loader}></Button>
    <BottomWarn label={"No Accout?"} link={"/signup"} linktext={"Sign up"}></BottomWarn>
     </div> 
 </div>

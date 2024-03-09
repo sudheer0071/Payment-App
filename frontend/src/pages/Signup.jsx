@@ -7,8 +7,8 @@ import { SubHeading } from "../components/SubHeading"
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 import { BACKEND_URL } from "../config"
+import { load, navState } from "../atom"
 import { useRecoilState } from "recoil"
-import { navState } from "../atom"
 
 export function  Signup(){
 
@@ -19,6 +19,7 @@ const [password, setPassword] = useState("")
 const [popup, setPopup] = useState("")
 const [isOpen, setIsopen] = useState(false)
 const [logged, setLogged] = useRecoilState(navState)
+const [loader, setLoader] = useRecoilState(load)
 
 const navigate = useNavigate()
 
@@ -47,12 +48,14 @@ return <div className="bg-slate-300 h-screen flex justify-center">
         setPopup("Please enter all feilds")
       }
       else{
+        setLoader('signup')
         const res = await axios.post(`${BACKEND_URL}/api/v1/user/signUp`,
       {
         firstname, lastname, username, password
        })
-       const json = res.data.message
-          console.log("inside settimeout");
+       const json = res.data.message 
+       if (json.includes('sucessfully')) {
+        
           setTimeout(() => { 
             setIsopen(false)
             setFirstname("")
@@ -69,8 +72,19 @@ return <div className="bg-slate-300 h-screen flex justify-center">
           setPopup(json)
           console.log(res.data.token);
         }
+        else{
+         setLoader('')
+          setTimeout(() => { 
+            setIsopen(false) 
+            setUsername('')
+            setPopup('') 
+          }, 3000); 
+          setIsopen(true)
+          setPopup(json) 
+        }
+      }
      
-   }} label={"Sign up"}></Button>
+   }} loader={loader} label={"Sign up"}></Button>
    <BottomWarn label={"Already have an account?"} link={"/signin"} linktext={"Sign in"}></BottomWarn>
     </div> 
 </div>

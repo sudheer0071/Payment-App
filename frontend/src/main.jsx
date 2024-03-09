@@ -6,7 +6,7 @@ import { RecoilRoot} from 'recoil'
 import { Router } from 'react-router-dom'
 
 ReactDOM.createRoot(document.getElementById('root')).render( 
-<RecoilRoot> 
+<RecoilRoot>
     <App />   
 </RecoilRoot>
 )

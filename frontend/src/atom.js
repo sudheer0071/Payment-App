@@ -4,3 +4,8 @@ export const navState = atom({
   key:"navState",
   default:true
 })
+
+export const load = atom({
+  key:"laod",
+  default:''
+})

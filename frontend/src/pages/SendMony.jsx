@@ -7,7 +7,7 @@ import { BACKEND_URL } from "../config";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import { navState } from "../atom";
 import { Loader } from "../components/Loader";
-
+ 
 export const SendMoney = () => {
 const [searchParams] = useSearchParams()
 const id = searchParams.get("id")

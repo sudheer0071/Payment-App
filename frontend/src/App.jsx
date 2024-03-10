@@ -21,20 +21,12 @@ function MainApp() {
   const [logged, setLogged] = useRecoilState(navState)
 
   const [isloading, setIsloading] = useState(true)
-
-  useEffect(()=>{
-     const timeout = setTimeout(() => {
-      setIsloading(false); 
-     }, 3000);
-     return ()=>clearInterval(timeout)
-  },[isloading])
-
-
-  
+ 
   useEffect(() => {
 
     // check loggedin logic 
     const loggedIn = async () => {
+      setIsloading(true)
       const res = await axios.get(`${BACKEND_URL}/api/v1/user/me`, {
         headers: {
           authorization: "Bearer " + localStorage.getItem('TOKEN')
@@ -43,6 +35,9 @@ function MainApp() {
       const response = res.data.message
       console.log(response);
       console.log(res.data.firstname);
+      setTimeout(() => {       
+        setIsloading(false)
+      }, 2800);
       if (response.includes('logged')) {
         setLogged(true)
       }
@@ -51,7 +46,7 @@ function MainApp() {
       }
     }
     loggedIn()
-  }, [logged])
+  }, [logged, isloading])
 
   console.log(localStorage.getItem('TOKEN'));
   return (

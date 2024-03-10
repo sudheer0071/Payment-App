@@ -57,7 +57,7 @@ function MainApp() {
           <Route path='/signup' element={<Signup />}></Route> 
           <Route path='/send' element={<SendMoney />}>
           </Route>
-          <Route path='/signin' element={!logged ? <Signin /> : <Dashboard />}>
+          <Route path='/signin' element={!logged ? <Signin /> : <Navigate to='/dashboard' />}>
           </Route>
           <Route path='/dashboard' element={logged ? <Dashboard /> : <Navigate to='/signin' />}>
           </Route>
@@ -91,4 +91,15 @@ function Loader() {
     </div>
   </div>
 }
+
+function BackendDown() {
+  return (
+    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-800 text-white px-6 py-4 rounded-lg shadow-lg">
+      <h1 className="text-2xl font-bold mb-2">Backend is Down</h1>
+      <p>We are currently experiencing issues with our backend. Please try again later.</p>
+    </div>
+  );
+};
+
+
 export default App

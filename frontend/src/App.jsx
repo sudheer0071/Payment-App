@@ -19,41 +19,45 @@ function App() {
 function MainApp() {
 
   const [logged, setLogged] = useRecoilState(navState)
-
+  
   const [isloading, setIsloading] = useState(true)
- 
+  const [isbackendDown,setIsbackDown] = useState(false)
+  
   useEffect(() => {
-
+    
     // check loggedin logic 
-    const loggedIn = async () => {
-      setIsloading(true)
-      const res = await axios.get(`${BACKEND_URL}/api/v1/user/me`, {
-        headers: {
-          authorization: "Bearer " + localStorage.getItem('TOKEN')
-        }
-      })
-      const response = res.data.message
-      console.log(response);
-      console.log(res.data.firstname);
-      setTimeout(() => {       
-        setIsloading(false)
-      }, 2800);
-      if (response.includes('logged')) {
-        setLogged(true)
-      }
-      else {
-        setLogged(false)
-      }
+    const loggedIn = async () => {  
+      try {
+        const res = await axios.get(`${BACKEND_URL}/api/v1/user/me`, {
+          headers: {
+            authorization: "Bearer " + localStorage.getItem('TOKEN')
+          }
+        }) 
+        const response = res.data.message
+        //****************** will add backend is not responding functionality here ******************
+        console.log(response);
+        console.log(res.data.firstname);  
+        setTimeout(() => {    
+          setIsloading(false)
+        }, 2800); 
+          if (response.includes('logged')) {
+            setLogged(true)
+          }
+          else {
+            setLogged(false)
+          }
+        } catch (error) { 
+          setIsbackDown(true)
+    }
     }
     loggedIn()
-  }, [logged, isloading])
-
-  console.log(localStorage.getItem('TOKEN'));
+  }, [logged, isloading, isbackendDown])
+ 
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={isloading?<Loader/>:<Navigate to='/signin' />}></Route>
+          <Route path='/' element={(isbackendDown?<BackendDown/>:isloading?<Loader/>:<Navigate to='/signin' />)}></Route>
           <Route path='/signup' element={<Signup />}></Route> 
           <Route path='/send' element={<SendMoney />}>
           </Route>
@@ -94,11 +98,13 @@ function Loader() {
 
 function BackendDown() {
   return (
-    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-800 text-white px-6 py-4 rounded-lg shadow-lg">
-      <h1 className="text-2xl font-bold mb-2">Backend is Down</h1>
-      <p>We are currently experiencing issues with our backend. Please try again later.</p>
+    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-800 text-white px-10 py-8 rounded-lg shadow-lg">
+        <h1 className="text-3xl font-bold mb-4">Oops! Backend is down...</h1>
+        <p className="mb-6">We apologize for the inconvenience, but our backend is currently experiencing technical difficulties. Our team is working hard to resolve the issue as quickly as possible.</p>
+        <p className="mb-6">In the meantime, please check back later or contact support for further assistance.</p>
+       <h3><a className='flex underline' href="https://paytm-litee.vercel.app/">Try Refreshing a page</a></h3>
     </div>
-  );
+);
 };
 
 

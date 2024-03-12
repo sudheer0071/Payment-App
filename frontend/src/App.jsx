@@ -59,13 +59,13 @@ function MainApp() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={(isbackendDown?<BackendDown/>:isloading?<Loader/>:<Navigate to='/signin' />)}></Route>
+          <Route path='/' element={isbackendDown?<BackendDown/>:isloading?<Loader/>:<Navigate to='/signin' />}></Route>
           <Route path='/signup' element={<Signup />}></Route> 
           <Route path='/send' element={<SendMoney />}>
           </Route>
           <Route path='/signin' element={!logged ? <Signin /> : <Navigate to='/dashboard' />}>
           </Route>
-          <Route path='/dashboard' element={logged ? <Dashboard /> : <Navigate to='/signin' />}>
+          <Route path='/dashboard' element={isbackendDown?<BackendDown/>:logged ? <Dashboard /> : <Navigate to='/signin' />}>
           </Route>
         </Routes>
       </BrowserRouter>

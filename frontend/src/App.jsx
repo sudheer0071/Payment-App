@@ -47,7 +47,9 @@ function MainApp() {
             setLogged(false)
           }
         } catch (error) { 
-          setIsbackDown(true)
+          setTimeout(() => {
+            setIsbackDown(true)
+          }, 2000);
     }
     }
     loggedIn()

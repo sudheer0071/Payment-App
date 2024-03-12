@@ -5,7 +5,7 @@ import { Dashboard } from './pages/Dashboard'
 import { SendMoney } from './pages/SendMony'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { navState } from './atom'
+import { backendDown, navState } from './atom'
 import { useRecoilState } from 'recoil'
 import { BACKEND_URL } from './config'
 
@@ -21,8 +21,7 @@ function MainApp() {
   const [logged, setLogged] = useRecoilState(navState)
   
   const [isloading, setIsloading] = useState(true)
-  const [isbackendDown,setIsbackDown] = useState(false)
-  
+  const [isbackendDown,setIsbackDown] = useRecoilState(backendDown) 
   useEffect(() => {
     
     // check loggedin logic 
@@ -59,6 +58,7 @@ function MainApp() {
     <div>
       <BrowserRouter>
         <Routes>
+          <Route path='/backendDown' element={<BackendDown/>}></Route>
           <Route path='/' element={isbackendDown?<BackendDown/>:isloading?<Loader/>:<Navigate to='/signin' />}></Route>
           <Route path='/signup' element={<Signup />}></Route> 
           <Route path='/send' element={<SendMoney />}>

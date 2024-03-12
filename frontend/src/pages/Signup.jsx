@@ -7,7 +7,7 @@ import { SubHeading } from "../components/SubHeading"
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 import { BACKEND_URL } from "../config"
-import { load, navState } from "../atom"
+import { backendDown, load, navState } from "../atom"
 import { useRecoilState } from "recoil"
 
 export function  Signup(){
@@ -20,6 +20,7 @@ const [popup, setPopup] = useState("")
 const [isOpen, setIsopen] = useState(false)
 const [logged, setLogged] = useRecoilState(navState)
 const [loader, setLoader] = useRecoilState(load)
+const [isbackendDown, setIsbackDown] = useRecoilState(backendDown)
 
 const navigate = useNavigate()
 
@@ -48,8 +49,10 @@ return <div className="bg-slate-300 h-screen flex justify-center">
         setPopup("Please enter all feilds")
       }
       else{
-        setLoader('signup')
-        const res = await axios.post(`${BACKEND_URL}/api/v1/user/signUp`,
+        try {
+          
+          setLoader('signup')
+          const res = await axios.post(`${BACKEND_URL}/api/v1/user/signUp`,
       {
         firstname, lastname, username, password
        })
@@ -83,7 +86,15 @@ return <div className="bg-slate-300 h-screen flex justify-center">
           setIsopen(true)
           setPopup(json) 
         }
-      }
+      } catch (error) {
+       setTimeout(() => {
+        setIsbackDown(true)
+        navigate('/backendDown')
+        console.log("inside sighup catch")
+       }, 3500);
+    }
+      
+    }
      
    }} loader={loader} label={"Sign up"}></Button>
    <BottomWarn label={"Already have an account?"} link={"/signin"} linktext={"Sign in"}></BottomWarn>

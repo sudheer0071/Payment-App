@@ -9,3 +9,8 @@ export const load = atom({
   key:"laod",
   default:''
 })
+
+export const backendDown = atom({
+  key:"backendDown",
+  default:false
+})

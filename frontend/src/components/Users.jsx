@@ -11,7 +11,11 @@ export function Users(){
   const [filter, setFilter] = useState('')
 useEffect(()=> {
   async function fetchData(){
-  const res = await axios.get(`${BACKEND_URL}/api/v1/user/bulk?filter=`+ filter)
+  const res = await axios.get(`${BACKEND_URL}/api/v1/user/bulk?filter=`+ filter,{
+    headers:{
+      Authorization:"Bearer "+localStorage.getItem("TOKEN")
+    }
+  })
   const users = res.data.user
   console.log(users.length); 
   setUser(users)

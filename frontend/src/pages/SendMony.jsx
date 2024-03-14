@@ -23,7 +23,7 @@ const navigate = useNavigate()
 
   return <div class="flex justify-center h-screen bg-gray-300 text-black">
     
-     <div className={`popup ${isOpen ? 'active' : 'hide'} ${popup.includes('Insufficient') || popup.includes('Invalid')||popup.includes('Enter')||popup.includes('Error')?'bg-red-400 p-2 h-16': ''} flex justify-center text-center w-80 shadow-lg bg-emerald-400 rounded-lg font-medium text-lg -ml-4 fixed top-4 h-11 p-1`}>{popup} {popup.includes('successful')?<img className="ml-3 p-1 w-8 h-8 rounded-3xl bg-white" src={logo} />:''}
+     <div className={`popup ${isOpen ? 'active' : 'hide'} ${popup.includes('Insufficient') || popup.includes('Invalid')||popup.includes('enter')||popup.includes('Error')?'bg-red-400 p-2 h-16': ''} flex justify-center text-center w-80 shadow-lg bg-emerald-400 rounded-lg font-medium text-lg -ml-4 fixed top-4 h-11 p-1`}>{popup} {popup.includes('successful')?<img className="ml-3 p-1 w-8 h-8 rounded-3xl bg-white" src={logo} />:''}
      </div>
     
       <div className="h-full flex flex-col justify-center">
@@ -66,8 +66,16 @@ const navigate = useNavigate()
                             setIsopen(false)
                         }, 2000);
                         setIsopen(true)
-                        setPopup("Please Enter Amount! ")
+                        setPopup("Please enter amount! ")
                     }
+                    else if (amount<=0) { 
+                        setTimeout(() => {
+                            setPopup('')
+                            setIsopen(false)
+                        }, 2000);
+                        setIsopen(true)
+                        setPopup("Please enter valid amount! ")
+                    } 
 
                   else{   
                     setLoader(true)

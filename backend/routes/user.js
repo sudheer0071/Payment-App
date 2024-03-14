@@ -83,7 +83,7 @@ route.put('/',authMiddleware, async (req,res) => {
    res.json({message:"updated successfully!!"})
 })  
  
-route.get('/bulk', async (req,res)=>{
+route.get('/bulk',authMiddleware ,async (req,res)=>{
   const filter = req.query.filter || ""
   const users = await User.find({
     $or:[
@@ -91,13 +91,9 @@ route.get('/bulk', async (req,res)=>{
      { lastname:{'$regex':filter}}
     ]
   })
+  const current = await User.findOne({_id:req.userId})
     res.json({
-    user: users.map((user)=>({
-      username:user.username,
-      firstname:user.firstname,
-      lastname:user.lastname,
-      _id:user._id
-    }))
+    user: users.filter((user)=>user.firstname!=current.firstname)
    }) 
 })
 module.exports = { 

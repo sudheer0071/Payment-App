@@ -1,4 +1,4 @@
 
-## Build a basic version of PayTM
+## Build a basic Payment application
 
-## Deployed link: [Paytm Lite](https://paytm-litee.vercel.app/)
+## Deployed link: [Payment](https://paytm-litee.vercel.app/)

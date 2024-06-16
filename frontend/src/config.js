@@ -1,1 +1,1 @@
-export const BACKEND_URL = "https://paytm-lite-ty6c.onrender.com"
+export const BACKEND_URL = "https://walrus-app-s6yf6.ondigitalocean.app"

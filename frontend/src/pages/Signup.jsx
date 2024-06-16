@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { BottomWarn } from "../components/BottomWarn"
-import { Button } from "../components/Button"
+import { Button } from "../components/Button" 
+
 import { Heading } from "../components/Heading"
 import { InputBox } from "../components/InputBox"
 import { SubHeading } from "../components/SubHeading"
@@ -8,8 +9,8 @@ import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 import { BACKEND_URL } from "../config"
 import { backendDown, load, navState } from "../atom"
-import { useRecoilState } from "recoil"
-
+import { useRecoilState } from "recoil" 
+ 
 export function  Signup(){
 
 const [firstname, setFirstname]= useState("")
@@ -30,13 +31,12 @@ return <div className="bg-slate-300 h-screen flex justify-center">
   <div className={`popup ${isOpen ? 'active' : 'hide'} ${popup.includes('feilds') || popup.includes('already')||popup.includes('more')?'bg-red-400 p-2 h-16': ''} flex justify-center text-center w-80 shadow-lg bg-green-500 rounded-lg font-medium -ml-4 text-lg fixed top-4 h-11 p-1`}>{popup}</div>
    <Heading text={"Sign up"}></Heading>
    <SubHeading text={"Enter your information to create an account"}></SubHeading>
-
-   
-
+ 
    <InputBox placeholder={"Enter First name"} value={firstname} onChange={(e)=>{setFirstname(e.target.value)}} label={"First name"}></InputBox>
    <InputBox placeholder={"Enter Last name"} value={lastname} onChange={(e)=>{setLastname(e.target.value)}}  label={"Last name"}></InputBox>
    <InputBox placeholder={"Enter Email"} value={username} onChange={(e)=>{setUsername(e.target.value)}}  label={"Email"}></InputBox>
    <InputBox password={true} placeholder={"Password name"} value={password} onChange={(e)=>{setPassword(e.target.value)}}  label={"Password"}></InputBox>
+
    <Button onclick={async ()=>{
      
      if (firstname==''||lastname==''||password==''||username=='') { 
@@ -96,8 +96,7 @@ return <div className="bg-slate-300 h-screen flex justify-center">
       
     }
      
-   }} loader={loader} label={"Sign up"}></Button>
-   <BottomWarn label={"Already have an account?"} link={"/signin"} linktext={"Sign in"}></BottomWarn>
+   }} loader={loader} label={"Sign up"}></Button> 
     </div> 
 </div>
   </div>

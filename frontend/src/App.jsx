@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import { backendDown, navState } from './atom'
 import { useRecoilState } from 'recoil'
 import { BACKEND_URL } from './config'
+import { HashLoader } from 'react-spinners'
 
 function App() {
   // const navigate = useNavigate()
